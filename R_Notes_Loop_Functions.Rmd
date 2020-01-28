@@ -1,0 +1,39 @@
+---
+title: "MyRNotes_Loop_Functions"
+author: "Mabel"
+date: "28/01/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tapply
+
+Tapply can apply a function to each cell of a ragged array, that is to each (non-empty) group of values given by a unique combination of the levels of certain factors. It can achieve a similar output just like **group_by**
+
+```{r example}
+library(tidyr)
+library(dplyr)
+library(datasets)
+data(mtcars)
+
+##Assume I need to know the average mpg by cyl numbers
+## group_by would be:
+avg1 <- mtcars%>%
+  group_by(cyl)%>%
+  summarize(avg = mean(mpg))
+avg1
+```
+```{r example, cont}
+##tapply wpuld be:
+avg2 <- tapply(mtcars$mpg, mtcars$cyl, mean)
+avg2
+```
+```{r example 3}
+##Sapply with split can also achieve the same output:
+avg3 <- sapply(split(mtcars$mpg, mtcars$cyl), mean)
+avg3
+```
+
